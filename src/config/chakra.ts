@@ -16,7 +16,7 @@ export const theme = extendTheme({
   // デフォルトのフォント
   // https://chakra-ui.com/docs/theming/theme#typography
   fonts: {
-    body: 'system-ui, sans-serif',
+    body: '"fot-udkakugo-large-pr6n", system-ui, sans-serif',
     heading: 'system-ui, sans-serif',
     mono: 'Menlo, monospace',
   },

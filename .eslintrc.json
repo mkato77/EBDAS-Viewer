@@ -10,43 +10,70 @@
     // import の順番をルール化
     // 参考：https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/order.md
     "import/order": [
-        "error",
-        {
-            "groups": ["builtin", "external", "internal", "parent", "sibling", "index", "object", "type"],
-            "newlines-between": "always",
-            "pathGroupsExcludedImportTypes": ["builtin"],
-            "alphabetize": {
-                "order": "asc", "caseInsensitive": true
-            },
-            "pathGroups": [{
-                "pattern": "react", "group": "external", "position": "before"
-            },
-                {
-                    "pattern": "prop-types", "group": "type", "position": "before"
-                },
-                {
-                    "pattern": "next", "group": "external", "position": "before"
-                },
-                {
-                    "pattern": "next/**", "group": "external", "position": "before"
-                },
-                {
-                    "pattern": "@/config/**", "group": "external", "position": "before"
-                },
-                {
-                    "pattern": "@/components/**", "group": "internal", "position": "before"
-                },
-                
-                // styles
-                // groupをindex扱いにする
-                {
-                    "pattern": "@/styles/**", "group": "internal", "position": "before"
-                },
-                {
-                    "pattern": "./**.module.css", "group": "index", "position": "before"
-                }
-            ]
-        }
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "type"
+        ],
+        "newlines-between": "always",
+        "pathGroupsExcludedImportTypes": ["builtin"],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "prop-types",
+            "group": "type",
+            "position": "before"
+          },
+          {
+            "pattern": "next",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "next/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@/config/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@/components/**",
+            "group": "internal",
+            "position": "before"
+          },
+
+          // styles
+          // groupをindex扱いにする
+          {
+            "pattern": "@/styles/**",
+            "group": "internal",
+            "position": "before"
+          },
+          {
+            "pattern": "./**.module.css",
+            "group": "index",
+            "position": "before"
+          }
+        ]
+      }
     ]
   }
 }

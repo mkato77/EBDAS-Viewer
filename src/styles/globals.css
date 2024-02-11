@@ -1,15 +1,38 @@
-html,
+/* html {
+  visibility: hidden;
+}
+html.wf-active {
+  visibility: visible;
+} */
+
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
     Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-weight: 400;
 }
 
 a {
   color: inherit;
   text-decoration: none;
 }
+
+.ud-bold {
+  font-family: "fot-udkakugo-large-pr6n";
+  font-weight: 700;
+}
+
+.ag-header-cell-label {
+  font-family: "fot-udkakugo-large-pr6n" !important;
+  font-weight: 500 !important;
+}
+
+.ag-cell-value {
+  font-family: "a-otf-ud-shin-go-pr6n" !important;
+  font-weight: 400 !important;
+}
+
 
 * {
   box-sizing: border-box;
