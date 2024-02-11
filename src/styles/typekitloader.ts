@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import { useEffect } from 'react';
 
 const TypekitLoader: React.FC = () => {
@@ -18,12 +18,14 @@ const TypekitLoader: React.FC = () => {
       h.className += 'wf-loading';
       tk.src = `https://use.typekit.net/${config.kitId}.js`;
       tk.async = true;
-      console.log("a")
+      console.log('a');
       tk.onload = function () {
         clearTimeout(t);
         try {
           (window as any).Typekit.load(config);
-        } catch (e) {console.error(e)}
+        } catch (e) {
+          console.error(e);
+        }
       };
       tk.onerror = function () {
         clearTimeout(t);

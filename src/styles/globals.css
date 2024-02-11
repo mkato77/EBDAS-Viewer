@@ -19,20 +19,19 @@ a {
 }
 
 .ud-bold {
-  font-family: "fot-udkakugo-large-pr6n";
+  font-family: 'fot-udkakugo-large-pr6n';
   font-weight: 700;
 }
 
 .ag-header-cell-label {
-  font-family: "fot-udkakugo-large-pr6n" !important;
+  font-family: 'fot-udkakugo-large-pr6n' !important;
   font-weight: 500 !important;
 }
 
 .ag-cell-value {
-  font-family: "a-otf-ud-shin-go-pr6n" !important;
+  font-family: 'a-otf-ud-shin-go-pr6n' !important;
   font-weight: 400 !important;
 }
-
 
 * {
   box-sizing: border-box;

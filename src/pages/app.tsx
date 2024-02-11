@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
-import { Button, Grid, GridItem, SimpleGrid, Textarea, useDisclosure } from '@chakra-ui/react';
-import { Box, Text ,
+
+import { NextPage } from 'next';
+
+// import local.jp.js
+import AG_GRID_LOCALE_JP from '@/config/locale';
+
+import { Button, Grid, GridItem, SimpleGrid, Textarea, useDisclosure ,
+  Box,
+  Text,
   Drawer,
   DrawerBody,
   DrawerFooter,
@@ -9,27 +16,26 @@ import { Box, Text ,
   DrawerContent,
   DrawerCloseButton,
 } from '@chakra-ui/react';
-import { AgGridReact } from 'ag-grid-react';
-import { ICellRendererComp, ICellRendererParams, RowClickedEvent } from 'ag-grid-community';
-import initSqlJs from 'sql.js'
 import { ColDef } from 'ag-grid-community/dist/lib/entities/colDef';
+import { AgGridReact } from 'ag-grid-react';
+import initSqlJs from 'sql.js';
+
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css'; // 任意のテーマを選択
-// import local.jp.js
-import AG_GRID_LOCALE_JP from '@/config/locale';
-import { Dictionary, List } from 'lodash';
+
+
 import AppBar from '@/components/AppBar';
 import { TempChart } from '@/components/tempChart';
-import { NextPage } from 'next';
+
 
 const App: NextPage = () => {
   type Dataset = string;
   type DatasetRecord = {
     [rawdata: string]: Dataset;
-  }
+  };
   const [rowData, setRowData] = useState<any[]>([]);
   const [oneData, setOneData] = useState<DatasetRecord>({});
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
   /*
 type dataRow = {
     id: number;
@@ -55,23 +61,31 @@ type dataRow = {
   */
 
   const [colDefs, setColDefs] = useState<ColDef[]>([
-    { field: 'id', cellDataType: 'number', headerName: '#', filter:"agNumberColumnFilter", type: 'numericColumn', width: 30, pinned: 'left'},
-    { field: 'baloon', cellDataType: "text", headerName: "機体", pinned: 'left' , width: 120},
-    { field: 'weight', headerName: "重量", cellDataType: 'number', pinned: 'left', width: 50},
-    { field: 'recordTime', headerName: "記録[s]" },
-    { field: 'chargeTime', headerName: "充電[s]" },
-    { field: 'airTime', headerName: "滞空[s]" },
-    { field: 'temperature_ave', headerName: "温度[℃]" },
-    { field: 'pressure_init', headerName: "気圧[hPa]" },
-    { field: 'humidity_init', headerName: "湿度[%]" },
-    { field: 'altitude_max', headerName: "最大高度[m]" },
-    { field: 'a_ave_init', headerName: "内部(離陸時)[℃]" },
-    { field: 'a0_max', headerName: "A0max" },
-    { field: 'a1_max', headerName: "A1max" },
-    { field: 'a2_max', headerName: "A2max" },
-    { field: 'a3_max', headerName: "A3max" },
-    { field: 'datetime', headerName: "日時", width:300 },
-    { field: 'rawdata', hide: true, type: 'string'},
+    {
+      field: 'id',
+      cellDataType: 'number',
+      headerName: '#',
+      filter: 'agNumberColumnFilter',
+      type: 'numericColumn',
+      width: 30,
+      pinned: 'left',
+    },
+    { field: 'baloon', cellDataType: 'text', headerName: '機体', pinned: 'left', width: 120 },
+    { field: 'weight', headerName: '重量', cellDataType: 'number', pinned: 'left', width: 50 },
+    { field: 'recordTime', headerName: '記録[s]' },
+    { field: 'chargeTime', headerName: '充電[s]' },
+    { field: 'airTime', headerName: '滞空[s]' },
+    { field: 'temperature_ave', headerName: '温度[℃]' },
+    { field: 'pressure_init', headerName: '気圧[hPa]' },
+    { field: 'humidity_init', headerName: '湿度[%]' },
+    { field: 'altitude_max', headerName: '最大高度[m]' },
+    { field: 'a_ave_init', headerName: '内部(離陸時)[℃]' },
+    { field: 'a0_max', headerName: 'A0max' },
+    { field: 'a1_max', headerName: 'A1max' },
+    { field: 'a2_max', headerName: 'A2max' },
+    { field: 'a3_max', headerName: 'A3max' },
+    { field: 'datetime', headerName: '日時', width: 300 },
+    { field: 'rawdata', hide: true, type: 'string' },
   ]);
   const [gridApi, setGridApi] = useState<any>(null);
 
@@ -87,7 +101,7 @@ type dataRow = {
     // ここでは仮のデータをセットしている
     //@ts-ignore
     initSqlJs({
-      locateFile: (file) => (new URL("sql.js/dist/sql-wasm.wasm", import.meta.url)).toString(),
+      locateFile: (file) => new URL('sql.js/dist/sql-wasm.wasm', import.meta.url).toString(),
     }).then((SQL) => {
       const db = new SQL.Database(new Uint8Array(buffer));
       let res = db.exec('SELECT * FROM data');
@@ -120,62 +134,70 @@ type dataRow = {
 
   return (
     <>
-    <AppBar>
-      <label htmlFor="file-input">
-        <Button as="span">
-          Open
-        </Button>
-      <input id="file-input" type="file" accept=".db" onChange={handleFileChange} style={{ display: 'none' }} />
-      </label>
-    </AppBar>
-    <Box p={{top:0, right:4, left:4}} zIndex="base" style={{height: "100%"}}>
-      <Grid  gap={0}>
-      <GridItem rowSpan={1}>
-      <Box mt={14} className='ag-theme-quartz' style={{ height: '430px', width: '100%' }}>
-
-        <AgGridReact
-          rowData={rowData}
-          localeText={AG_GRID_LOCALE_JP}
-          columnDefs={colDefs}
-          defaultColDef={{
-            resizable: true,
-            filter: true,
-            sortable: true,
-            flex: 1,
-            minWidth: 100,
-            floatingFilter:true
-          }}
-          rowGroupPanelShow="always"
-          pivotPanelShow="always"
-          onRowClicked={(params: RowClickedEvent) => {
-            setOneData(params.data as Dictionary<any>);
-            console.log(params.data);
-            // onOpen();
-          }}
-          pagination={true}
-          paginationPageSize={500}
-          rowHeight={40}
-        />
+      <AppBar>
+        <label htmlFor='file-input'>
+          <Button as='span'>Open</Button>
+          <input
+            id='file-input'
+            type='file'
+            accept='.db'
+            onChange={handleFileChange}
+            style={{ display: 'none' }}
+          />
+        </label>
+      </AppBar>
+      <Box p={{ top: 0, right: 4, left: 4 }} zIndex='base' style={{ height: '100%' }}>
+        <Grid gap={0}>
+          <GridItem rowSpan={1}>
+            <Box mt={14} className='ag-theme-quartz' style={{ height: '430px', width: '100%' }}>
+              <AgGridReact
+                rowData={rowData}
+                localeText={AG_GRID_LOCALE_JP}
+                columnDefs={colDefs}
+                defaultColDef={{
+                  resizable: true,
+                  filter: true,
+                  sortable: true,
+                  flex: 1,
+                  minWidth: 100,
+                  floatingFilter: true,
+                }}
+                rowGroupPanelShow='always'
+                pivotPanelShow='always'
+                onRowClicked={(params: any) => {
+                  setOneData(params.data);
+                  console.log(params.data);
+                  // onOpen();
+                }}
+                pagination={true}
+                paginationPageSize={500}
+                rowHeight={40}
+              />
+            </Box>
+          </GridItem>
+          <GridItem rowSpan={1}>
+            <SimpleGrid columns={[2, null, 3]} spacing='10px'>
+              <Textarea value={oneData['rawdata']} placeholder='raw data' height='350px' />
+              <TempChart
+                data={oneData['rawdata']}
+                recordTime={oneData['recordTime']}
+                airTime={oneData['airTime']}
+                chargeTime={oneData['chargeTime']}
+              />
+            </SimpleGrid>
+          </GridItem>
+        </Grid>
+        <Drawer onClose={onClose} isOpen={isOpen} size='xl'>
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader>{`${oneData['id']} のデータ`}</DrawerHeader>
+            <DrawerBody>
+              <Text>{oneData['rawdata']}</Text>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
       </Box>
-      </GridItem>
-      <GridItem rowSpan={1}>
-      <SimpleGrid columns={[2, null, 3]} spacing='10px'>
-        <Textarea value={oneData["rawdata"]} placeholder='raw data' height="350px"/>
-        <TempChart data={oneData["rawdata"]} recordTime={oneData["recordTime"]} airTime={oneData["airTime"]} chargeTime={oneData["chargeTime"]}/>
-      </SimpleGrid>
-      </GridItem>
-      </Grid>
-      <Drawer onClose={onClose} isOpen={isOpen} size="xl">
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>{`${oneData["id"]} のデータ`}</DrawerHeader>
-          <DrawerBody>
-            <Text>{oneData["rawdata"]}</Text>
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
-    </Box>
     </>
   );
 };
