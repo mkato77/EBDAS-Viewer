@@ -4,6 +4,7 @@
 
 import { indexOf } from "lodash";
 import dynamic from "next/dynamic";
+import { off } from "process";
 import { number } from "prop-types";
 const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -62,7 +63,8 @@ export function TempChart({data, recordTime, chargeTime, airTime}: {data: string
     const n_data: SensorData  = parseData(data);
     const option = {
         chart: {
-          id: 'temperature'
+          id: 'temperature',
+          fontFamily: "a-otf-ud-shin-go-pr6n"
         },
         xaxis: {
             title: {
@@ -129,6 +131,7 @@ export function TempChart({data, recordTime, chargeTime, airTime}: {data: string
                   color: '#333',
                   background: '#FEB019',
                 },
+                offsetY: 30,
                 text: '滞空',
               }
             }],
@@ -142,6 +145,8 @@ export function TempChart({data, recordTime, chargeTime, airTime}: {data: string
                   color: '#fff',
                   background: '#775DD0',
                 },
+                offsetY: -10,
+                orientation: 'horizontal',
                 text: '着陸',
               }
             }, {
@@ -154,6 +159,8 @@ export function TempChart({data, recordTime, chargeTime, airTime}: {data: string
                     color: '#fff',
                     background: '#775DD0',
                   },
+                  offsetY: -10,
+                  orientation: 'horizontal',
                   text: '離陸',
                 }
               },{
@@ -169,6 +176,8 @@ export function TempChart({data, recordTime, chargeTime, airTime}: {data: string
                   background: '#00E396',
                 },
                 offsetY: -10,
+                offsetX: 30,
+                orientation: 'horizontal',
                 text: '気体充填',
               }
             }],

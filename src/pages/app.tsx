@@ -11,6 +11,7 @@ import { Box, Text ,
 } from '@chakra-ui/react';
 import { AgGridReact } from 'ag-grid-react';
 import { ICellRendererComp, ICellRendererParams, RowClickedEvent } from 'ag-grid-community';
+import initSqlJs from 'sql.js'
 import { ColDef } from 'ag-grid-community/dist/lib/entities/colDef';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css'; // 任意のテーマを選択
@@ -19,8 +20,9 @@ import AG_GRID_LOCALE_JP from '@/config/locale';
 import { Dictionary, List } from 'lodash';
 import AppBar from '@/components/AppBar';
 import { TempChart } from '@/components/tempChart';
+import { NextPage } from 'next';
 
-const App: React.FC = () => {
+const App: NextPage = () => {
   type Dataset = string;
   type DatasetRecord = {
     [rawdata: string]: Dataset;
@@ -85,7 +87,7 @@ type dataRow = {
     // ここでは仮のデータをセットしている
     //@ts-ignore
     initSqlJs({
-      locateFile: (file) => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/${file}`,
+      locateFile: (file) => (new URL("sql.js/dist/sql-wasm.wasm", import.meta.url)).toString(),
     }).then((SQL) => {
       const db = new SQL.Database(new Uint8Array(buffer));
       let res = db.exec('SELECT * FROM data');
