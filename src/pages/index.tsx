@@ -149,7 +149,7 @@ type dataRow = {
       <Box p={{ top: 0, right: 4, left: 4 }} zIndex='base' style={{ height: '100%' }}>
         <Grid gap={0}>
           <GridItem rowSpan={1}>
-            <Box mt={14} className='ag-theme-quartz' style={{ height: '430px', width: '100%' }}>
+            <Box mt={12} className='ag-theme-quartz' style={{ height: '430px', width: '100%' }}>
               <AgGridReact
                 rowData={rowData}
                 localeText={AG_GRID_LOCALE_JP}
