@@ -94,7 +94,7 @@ const App: NextPage = () => {
       try {
         files = await window.showOpenFilePicker();
       } catch (error: any) {
-        if (error.name.includes('SecurityError')) {
+        if (error.name.includes('SecurityError') || error.name.includes('TypeError')) {
           console.error('File System Access API でファイルを開けませんでした。エラー：', error);
           // File System Access API で開かなかった（従来の方法でファイルを開いた）場合
           setShowRefreshIcon(false); // 更新アイコンを非表示にする
