@@ -52,37 +52,58 @@ a {
 }
 
 .ud {
-  font-family: 'fot-udkakugo-large-pr6n';
+  font-family: 'fot-udkakugo-large-pr6n', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Hiragino Sans', 'Noto Sans CJK JP', 'Original Yu Gothic', 'Yu Gothic', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Sans Emoji';
   font-weight: 400;
 }
 
 .ud-medium {
-  font-family: 'fot-udkakugo-large-pr6n';
+  font-family: 'fot-udkakugo-large-pr6n', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Hiragino Sans', 'Noto Sans CJK JP', 'Original Yu Gothic', 'Yu Gothic', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Sans Emoji';
   font-weight: 500;
 }
 
 .ud-bold {
-  font-family: 'fot-udkakugo-large-pr6n';
+  font-family: 'fot-udkakugo-large-pr6n', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Hiragino Sans', 'Noto Sans CJK JP', 'Original Yu Gothic', 'Yu Gothic', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Sans Emoji';
   font-weight: 700;
 }
 
 .ag-header-cell-label {
-  font-family: 'fot-udkakugo-large-pr6n' !important;
+  font-family: 'fot-udkakugo-large-pr6n', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Hiragino Sans', 'Noto Sans CJK JP', 'Original Yu Gothic', 'Yu Gothic', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Sans Emoji' !important;
   font-weight: 500 !important;
 }
 
 .ag-picker-field-display {
-  font-family: 'fot-udkakugo-large-pr6n' !important;
+  font-family: 'fot-udkakugo-large-pr6n', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Hiragino Sans', 'Noto Sans CJK JP', 'Original Yu Gothic', 'Yu Gothic', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Sans Emoji' !important;
   font-weight: 500 !important;
 }
 
 .ag-list {
-  font-family: 'fot-udkakugo-large-pr6n' !important;
+  font-family: 'fot-udkakugo-large-pr6n', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Hiragino Sans', 'Noto Sans CJK JP', 'Original Yu Gothic', 'Yu Gothic', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Sans Emoji' !important;
   font-weight: 500 !important;
 }
 
 .ag-input-field-input {
-  font-family: 'fot-udkakugo-large-pr6n' !important;
+  font-family: 'fot-udkakugo-large-pr6n', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Hiragino Sans', 'Noto Sans CJK JP', 'Original Yu Gothic', 'Yu Gothic', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Sans Emoji' !important;
+  font-weight: 500 !important;
+}
+
+.ag-overlay-no-rows-center {
+  font-family: 'fot-udkakugo-large-pr6n', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Hiragino Sans', 'Noto Sans CJK JP', 'Original Yu Gothic', 'Yu Gothic', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Sans Emoji' !important;
   font-weight: 500 !important;
 }
 

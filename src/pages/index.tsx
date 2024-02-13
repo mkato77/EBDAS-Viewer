@@ -464,8 +464,11 @@ type dataRow = {
           justifyContent='center'
           verticalAlign='center'
           style={{ height: '100vh' }}
+          className='ud-medium'
         >
-          <Text align='center'>データを選択してください</Text>
+          <Text className='ud-medium' align='center'>
+            データを選択してください
+          </Text>
         </Box>
       );
     }
