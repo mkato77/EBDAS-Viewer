@@ -246,7 +246,7 @@ export function PressureChart({
 
   const series = [
     {
-      name: 'humidity',
+      name: '圧力',
       data: n_data['pressure'],
     },
   ];

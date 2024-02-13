@@ -246,7 +246,7 @@ export function AltitudeChart({
 
   const series = [
     {
-      name: 'altitude',
+      name: '高度',
       data: n_data['altitude'],
     },
   ];
