@@ -90,17 +90,25 @@ const App: NextPage = () => {
     console.log(selected);
     let buffer = bufferCache;
     if (selected == false || bufferCache == null) {
-      let files: FileSystemFileHandle[];
+      let files: FileSystemFileHandle[] = [];
       try {
         files = await window.showOpenFilePicker();
-      } catch (error) {
-        console.error('File System Access API でファイルを開けませんでした。エラー：', error);
-        toast({
-          title: `ファイル選択がキャンセルされました。`,
-          status: 'error',
-          isClosable: true,
-        });
-        return;
+      } catch (error: any) {
+        if (error.name.includes('SecurityError')) {
+          console.error('File System Access API でファイルを開けませんでした。エラー：', error);
+          // File System Access API で開かなかった（従来の方法でファイルを開いた）場合
+          setShowRefreshIcon(false); // 更新アイコンを非表示にする
+          handleFileOpenWithoutAPI(); // 従来の方法でファイルの内容を取得する処理
+          return;
+        } else {
+          console.error('File System Access API でファイルを開けませんでした。エラー：', error);
+          toast({
+            title: `ファイル選択がキャンセルされました。`,
+            status: 'error',
+            isClosable: true,
+          });
+          return;
+        }
       }
       if (!files) {
         toast({

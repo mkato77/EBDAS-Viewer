@@ -246,8 +246,8 @@ export function HumidityChart({
 
   const series = [
     {
-      name: 'humidity',
-      data: n_data['湿度'],
+      name: '湿度',
+      data: n_data['humidity'],
     },
   ];
 
