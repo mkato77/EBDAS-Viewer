@@ -19,7 +19,7 @@ const AppBar: React.FC<AppBarProps> = ({ children }) => {
       padding='0.1rem 1rem'
       boxShadow='md'
       zIndex={1000}
-      position="relative"
+      position='relative'
       // position='fixed' // 上部に固定
       top='0' // 画面の上部に配置
       width='100%' // 横幅を100%に設定
@@ -28,7 +28,7 @@ const AppBar: React.FC<AppBarProps> = ({ children }) => {
       <Box alignItems='center' display='flex'>
         <Image src='./ebdas.png' alt='Logo' height='50px' />
         <Text fontSize='xl' fontWeight='bold' className='ud-bold'>
-          ビューア
+          ビューアー
         </Text>
       </Box>
       {/* ここに他のAppBarのコンテンツを追加 */}
