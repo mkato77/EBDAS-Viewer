@@ -180,14 +180,14 @@ const AG_GRID_LOCALE_JP = {
   totalAndFilteredRows: '行',
   more: 'その他',
   to: '/',
-  of: 'の',
-  page: 'ページ',
+  of: 'of',
+  page: '',
   pageLastRowUnknown: '？',
   nextPage: '次のページ',
   lastPage: '最後のページ',
   firstPage: '最初のページ',
   previousPage: '前のページ',
-  pageSizeSelectorLabel: 'ページサイズ:',
+  pageSizeSelectorLabel: 'Size',
   footerTotal: '合計',
 
   // Pivoting

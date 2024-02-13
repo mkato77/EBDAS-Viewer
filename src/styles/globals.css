@@ -5,17 +5,60 @@ html.wf-active {
   visibility: visible;
 } */
 
+@font-face {
+  font-family: 'Original Yu Gothic';
+  src: local('Yu Gothic Medium');
+  font-weight: 100;
+}
+@font-face {
+  font-family: 'Original Yu Gothic';
+  src: local('Yu Gothic Medium');
+  font-weight: 200;
+}
+@font-face {
+  font-family: 'Original Yu Gothic';
+  src: local('Yu Gothic Medium');
+  font-weight: 300;
+}
+@font-face {
+  font-family: 'Original Yu Gothic';
+  src: local('Yu Gothic Medium');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Original Yu Gothic';
+  src: local('Yu Gothic Bold');
+  font-weight: bold;
+}
+
+html {
+  height: 100%;
+}
+
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
-    Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  font-weight: 400;
+  /* font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+    Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hiragino Sans',
+    'Noto Sans CJK JP', 'Original Yu Gothic', 'Yu Gothic', sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Sans Emoji';
+  height: 100%;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+.ud {
+  font-family: 'fot-udkakugo-large-pr6n';
+  font-weight: 400;
+}
+
+.ud-medium {
+  font-family: 'fot-udkakugo-large-pr6n';
+  font-weight: 500;
 }
 
 .ud-bold {
@@ -28,11 +71,39 @@ a {
   font-weight: 500 !important;
 }
 
-.ag-cell-value {
+.ag-picker-field-display {
+  font-family: 'fot-udkakugo-large-pr6n' !important;
+  font-weight: 500 !important;
+}
+
+.ag-list {
+  font-family: 'fot-udkakugo-large-pr6n' !important;
+  font-weight: 500 !important;
+}
+
+.ag-input-field-input {
+  font-family: 'fot-udkakugo-large-pr6n' !important;
+  font-weight: 500 !important;
+}
+
+/* .ag-paging-panel {
+  font-family: 'fot-udkakugo-large-pr6n' !important;
+  font-weight: 500 !important;
+} */
+
+/* .ag-cell-value {
   font-family: 'a-otf-ud-shin-go-pr6n' !important;
   font-weight: 400 !important;
-}
+} */
 
 * {
   box-sizing: border-box;
+}
+
+.disabled-chakra {
+  all: initial;
+}
+
+.disabled-chakra * {
+  all: unset;
 }

@@ -59,7 +59,7 @@ const aryMin = function (a: number, b: number) {
   return Math.min(a, b);
 };
 
-export function TempChart({
+export function AltitudeChart({
   data,
   recordTime,
   chargeTime,
@@ -84,7 +84,7 @@ export function TempChart({
 
   const option = {
     chart: {
-      id: 'temperature',
+      id: 'altitude',
       fontFamily: 'a-otf-ud-shin-go-pr6n',
     },
     xaxis: {
@@ -96,17 +96,17 @@ export function TempChart({
     },
     yaxis: {
       title: {
-        text: '温度(℃)',
+        text: '高度(m)',
       },
       labels: {
         formatter: function (value: number) {
-          return value + '℃';
+          return value.toFixed(1) + 'm';
         },
       },
     },
 
     title: {
-      text: '外気温度, 内部温度(a0～a3)',
+      text: '高度',
     },
     dataLabels: {
       enabled: false,
@@ -118,7 +118,7 @@ export function TempChart({
     annotations: {
       yaxis: [
         {
-          y: n_data['a0'].slice(zeroIndex).reduce(aryMin),
+          y: n_data['altitude'].slice(zeroIndex).reduce(aryMin),
           borderColor: '#00E396',
           label: {
             borderColor: 'transparent',
@@ -126,11 +126,11 @@ export function TempChart({
               // color: '#fff',
               background: 'transparent',
             },
-            text: n_data['a0'].slice(zeroIndex).reduce(aryMin).toString(),
+            text: n_data['altitude'].slice(zeroIndex).reduce(aryMin).toString(),
           },
         },
         {
-          y: n_data['a0'].slice(zeroIndex).reduce(aryMax),
+          y: n_data['altitude'].slice(zeroIndex).reduce(aryMax),
           borderColor: '#00E396',
           label: {
             borderColor: 'transparent',
@@ -138,9 +138,9 @@ export function TempChart({
               // color: '#fff',
               background: 'transparent',
             },
-            text: n_data['a0'].slice(zeroIndex).reduce(aryMax).toString(),
+            text: n_data['altitude'].slice(zeroIndex).reduce(aryMax).toString(),
             ofsetY: 10,
-            ofsetX: n_data['time'].indexOf(n_data['a0'].slice(zeroIndex).reduce(aryMax)),
+            ofsetX: n_data['time'].indexOf(n_data['altitude'].slice(zeroIndex).reduce(aryMax)),
           },
         },
         // {
@@ -215,8 +215,12 @@ export function TempChart({
       ],
       points: [
         {
-          x: n_data['time'][n_data['a0'].indexOf(n_data['a0'].reduce(aryMax))],
-          y: n_data['a0'].reduce(aryMax),
+          x: n_data['time'][
+            n_data['altitude']
+              .slice(zeroIndex)
+              .indexOf(n_data['altitude'].slice(zeroIndex).reduce(aryMax)) + zeroIndex
+          ],
+          y: n_data['altitude'].slice(zeroIndex).reduce(aryMax),
           marker: {
             size: 4,
             fillColor: '#fff',
@@ -233,7 +237,7 @@ export function TempChart({
               background: 'transparent',
             },
 
-            text: 'Max ' + n_data['a0'].reduce(aryMax).toString() + '℃',
+            text: 'Max ' + n_data['altitude'].slice(zeroIndex).reduce(aryMax).toString() + 'm',
           },
         },
       ],
@@ -242,24 +246,8 @@ export function TempChart({
 
   const series = [
     {
-      name: '温度',
-      data: n_data['temperature'],
-    },
-    {
-      name: 'a0',
-      data: n_data['a0'],
-    },
-    {
-      name: 'a1',
-      data: n_data['a1'],
-    },
-    {
-      name: 'a2',
-      data: n_data['a2'],
-    },
-    {
-      name: 'a3',
-      data: n_data['a3'],
+      name: 'altitude',
+      data: n_data['altitude'],
     },
   ];
 

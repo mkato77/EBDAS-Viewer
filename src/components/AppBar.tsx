@@ -19,7 +19,8 @@ const AppBar: React.FC<AppBarProps> = ({ children }) => {
       padding='0.1rem 1rem'
       boxShadow='md'
       zIndex={1000}
-      position='fixed' // 上部に固定
+      position="relative"
+      // position='fixed' // 上部に固定
       top='0' // 画面の上部に配置
       width='100%' // 横幅を100%に設定
       bg='white' // 背景色を白に設定

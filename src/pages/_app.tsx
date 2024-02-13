@@ -17,7 +17,18 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
         <meta name='description' content='EBDASで記録したデータを解析するソフトウェア' />
       </Head>
-      <ChakraProvider theme={theme}>
+      <ChakraProvider
+        theme={theme}
+        toastOptions={{
+          defaultOptions: {
+            position: 'bottom-left',
+            containerStyle: {
+              fontFamily: 'fot-udkakugo-large-pr6n',
+              fontWeight: 500,
+            },
+          },
+        }}
+      >
         <TypekitLoader />
         <Component {...pageProps} />
       </ChakraProvider>
