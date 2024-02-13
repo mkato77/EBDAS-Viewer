@@ -26,7 +26,7 @@ const AppBar: React.FC<AppBarProps> = ({ children }) => {
       bg='white' // 背景色を白に設定
     >
       <Box alignItems='center' display='flex'>
-        <Image src='./ebdas.png' alt='Logo' height='50px' />
+        <Image src='./ebdas.svg' alt='Logo' height='50px' />
         <Text fontSize='xl' fontWeight='bold' className='ud-bold'>
           ビューアー
         </Text>
