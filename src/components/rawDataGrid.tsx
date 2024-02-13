@@ -129,7 +129,7 @@ export function RawDataGrid({
           pivotPanelShow='always'
           pagination={true}
           paginationPageSize={500}
-          rowHeight={40}
+          rowHeight={25}
         />
       </Box>
     </>
