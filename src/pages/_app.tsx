@@ -15,8 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         {/* <script src='https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.6.2/sql-wasm.min.js' async></script> */}
         <title>EBDAS Viewer</title>
         <link rel='manifest' href='/manifest.json' />
-        <link rel='apple-touch-icon' href='/icon.png'></link>
-        <meta name='theme-color' content='#a1d863' />
+        <link rel='apple-touch-icon' href='/icon-512x512.png'></link>
         <meta name='viewport' content='initial-scale=1.0, width=device-width' />
         <meta name='description' content='EBDASで記録したデータを解析するソフトウェア' />
       </Head>
