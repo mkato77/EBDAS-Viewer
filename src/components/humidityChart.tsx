@@ -95,9 +95,6 @@ export function HumidityChart({
       type: 'numeric' as 'numeric',
     },
     yaxis: {
-      title: {
-        text: '湿度(%)',
-      },
       labels: {
         formatter: function (value: number) {
           return value.toFixed(1) + '%';

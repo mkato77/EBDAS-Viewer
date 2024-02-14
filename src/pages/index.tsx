@@ -30,6 +30,15 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
 } from '@chakra-ui/react';
 import { ArrowPathIcon } from '@heroicons/react/20/solid';
 import { ColDef } from 'ag-grid-community/dist/lib/entities/colDef';
@@ -52,6 +61,7 @@ export interface tableData {
   baloon: string;
   weight: number;
   datetime: string;
+  recordLocation: string;
   time: string;
   recordTime: number;
   chargeTime: number;
@@ -65,7 +75,12 @@ export interface tableData {
   a1_max: number;
   a2_max: number;
   a3_max: number;
+  a0_location: string;
+  a1_location: string;
+  a2_location: string;
+  a3_location: string;
   rawdata: string;
+  recordNote: string;
 }
 
 const App: NextPage = () => {
@@ -141,19 +156,25 @@ const App: NextPage = () => {
           weight: row[2],
           datetime: row[3].split('_')[0],
           time: row[3].split('_')[1].replace(/-/g, ':'),
-          recordTime: row[4],
-          chargeTime: row[5],
-          airTime: row[6],
-          temperature_ave: row[7],
-          pressure_init: row[8],
-          humidity_init: row[9],
-          altitude_max: row[10],
-          a_ave_init: row[11],
-          a0_max: row[12],
-          a1_max: row[13],
-          a2_max: row[14],
-          a3_max: row[15],
-          rawdata: row[16],
+          recordLocation: row[4],
+          recordTime: row[5],
+          chargeTime: row[6],
+          airTime: row[7],
+          temperature_ave: row[8],
+          pressure_init: row[9],
+          humidity_init: row[10],
+          altitude_max: row[11],
+          a_ave_init: row[12],
+          a0_max: row[13],
+          a1_max: row[14],
+          a2_max: row[15],
+          a3_max: row[16],
+          a0_location: row[17],
+          a1_location: row[18],
+          a2_location: row[19],
+          a3_location: row[20],
+          rawdata: row[21],
+          recordNote: row[22],
         };
       });
 
@@ -209,19 +230,25 @@ const App: NextPage = () => {
           weight: row[2],
           datetime: row[3].split('_')[0],
           time: row[3].split('_')[1],
-          recordTime: row[4],
-          chargeTime: row[5],
-          airTime: row[6],
-          temperature_ave: row[7],
-          pressure_init: row[8],
-          humidity_init: row[9],
-          altitude_max: row[10],
-          a_ave_init: row[11],
-          a0_max: row[12],
-          a1_max: row[13],
-          a2_max: row[14],
-          a3_max: row[15],
-          rawdata: row[16],
+          recordLocation: row[4],
+          recordTime: row[5],
+          chargeTime: row[6],
+          airTime: row[7],
+          temperature_ave: row[8],
+          pressure_init: row[9],
+          humidity_init: row[10],
+          altitude_max: row[11],
+          a_ave_init: row[12],
+          a0_max: row[13],
+          a1_max: row[14],
+          a2_max: row[15],
+          a3_max: row[16],
+          a0_location: row[17],
+          a1_location: row[18],
+          a2_location: row[19],
+          a3_location: row[20],
+          rawdata: row[21],
+          recordNote: row[22],
         };
       });
 
@@ -244,6 +271,7 @@ const App: NextPage = () => {
   const handleRefresh = async () => {
     if (isFileOpened) {
       // ファイルを再度読み取り、画面を更新する処理
+      console.log('handle');
       handleFileOpen(true);
     } else {
       // File System Access API でファイルを開いていない場合のエラーメッセージを表示する処理
@@ -317,6 +345,10 @@ type dataRow = {
     { field: 'a1_max', headerName: 'A1max' },
     { field: 'a2_max', headerName: 'A2max' },
     { field: 'a3_max', headerName: 'A3max' },
+    { field: 'a0_location', headerName: 'A0loc' },
+    { field: 'a1_location', headerName: 'A1loc' },
+    { field: 'a2_location', headerName: 'A2loc' },
+    { field: 'a3_location', headerName: 'A3loc' },
     {
       field: 'datetime',
       cellDataType: 'dateString',
@@ -325,7 +357,9 @@ type dataRow = {
       minWidth: 150,
     },
     { field: 'time', headerName: '時刻', width: 600 },
+    { field: 'recordLocation', headerName: '記録地点', minWidth: 150 },
     { field: 'rawdata', hide: true },
+    { field: 'recordNote', headerName: 'メモ', minWidth: 300 },
   ]);
   const [gridApi, setGridApi] = useState<any>(null);
   // const [a, setA] = useState(false);
@@ -354,7 +388,78 @@ type dataRow = {
               chargeTime={oneData['chargeTime']}
             />
           </Box>
-          <Accordion defaultIndex={accordionDefault} allowMultiple>
+          <Accordion defaultIndex={oneData['recordNote'] ? [0] : []} allowMultiple>
+            {oneData['recordNote'] ? (
+              <AccordionItem>
+                <h2>
+                  <AccordionButton>
+                    <Box as='span' flex='1' textAlign='left' className='ud-medium'>
+                      記録メモ
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                </h2>
+                <AccordionPanel pb={4}>
+                  <Text className='ud' style={{ whiteSpace: 'pre-wrap' }} fontSize='sm'>
+                    {oneData['recordNote']}
+                  </Text>
+                </AccordionPanel>
+              </AccordionItem>
+            ) : (
+              <></>
+            )}
+            <AccordionItem>
+              <h2>
+                <AccordionButton>
+                  <Box as='span' flex='1' textAlign='left' className='ud-medium'>
+                    情報 Information
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel pb={4}>
+                {/* chakra Tableで各種情報表示 */}
+                <TableContainer>
+                  <Table size='sm'>
+                    {/* <Thead>
+                      <Tr>
+                        <Th>To convert</Th>
+                        <Th>into</Th>
+                        <Th isNumeric>multiply by</Th>
+                      </Tr>
+                    </Thead> */}
+                    <Tbody>
+                      <Tr>
+                        <Td>記録日時</Td>
+                        <Td>
+                          {oneData['datetime'].replaceAll('-', '/')} {oneData['time']}
+                        </Td>
+                      </Tr>
+                      <Tr>
+                        <Td>記録場所</Td>
+                        <Td>{oneData['recordLocation']}</Td>
+                      </Tr>
+                      <Tr>
+                        <Td>a0</Td>
+                        <Td>{oneData['a0_location']}</Td>
+                      </Tr>
+                      <Tr>
+                        <Td>a1</Td>
+                        <Td>{oneData['a1_location']}</Td>
+                      </Tr>
+                      <Tr>
+                        <Td>a2</Td>
+                        <Td>{oneData['a2_location']}</Td>
+                      </Tr>
+                      <Tr>
+                        <Td>a3</Td>
+                        <Td>{oneData['a3_location']}</Td>
+                      </Tr>
+                    </Tbody>
+                  </Table>
+                </TableContainer>
+              </AccordionPanel>
+            </AccordionItem>
             <AccordionItem>
               <h2>
                 <AccordionButton
@@ -379,7 +484,10 @@ type dataRow = {
                   recordTime={oneData['recordTime']}
                   airTime={oneData['airTime']}
                   chargeTime={oneData['chargeTime']}
-                  height={250}
+                  a0_location={oneData['a0_location']}
+                  a1_location={oneData['a1_location']}
+                  a2_location={oneData['a2_location']}
+                  a3_location={oneData['a3_location']}
                 />
               </AccordionPanel>
             </AccordionItem>
@@ -437,6 +545,25 @@ type dataRow = {
                   airTime={oneData['airTime']}
                   chargeTime={oneData['chargeTime']}
                   height={250}
+                />
+              </AccordionPanel>
+            </AccordionItem>
+            <AccordionItem>
+              <h2>
+                <AccordionButton>
+                  <Box as='span' flex='1' textAlign='left' className='ud-medium'>
+                    データ Data
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel h={450} pb={4}>
+                <RawDataGrid
+                  data={oneData['rawdata']}
+                  recordTime={oneData['recordTime']}
+                  airTime={oneData['airTime']}
+                  chargeTime={oneData['chargeTime']}
+                  height={300}
                 />
               </AccordionPanel>
             </AccordionItem>
@@ -552,6 +679,10 @@ type dataRow = {
                     recordTime={oneData['recordTime']}
                     airTime={oneData['airTime']}
                     chargeTime={oneData['chargeTime']}
+                    a0_location={oneData['a0_location']}
+                    a1_location={oneData['a1_location']}
+                    a2_location={oneData['a2_location']}
+                    a3_location={oneData['a3_location']}
                   />
                   <AltitudeChart
                     data={oneData['rawdata']}
@@ -575,7 +706,7 @@ type dataRow = {
               </GridItem>
             </Grid>
           ) : (
-            <Grid gap={0} templateColumns='3fr 1fr' h='100%' style={{ height: '100%' }}>
+            <Grid gap={0} templateColumns='5fr 2fr' h='100%' style={{ height: '100%' }}>
               <GridItem rowSpan={2}>
                 <Box className='ag-theme-quartz' h='92%'>
                   <AgGridReact

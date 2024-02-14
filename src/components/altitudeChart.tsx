@@ -95,9 +95,6 @@ export function AltitudeChart({
       type: 'numeric' as 'numeric',
     },
     yaxis: {
-      title: {
-        text: '高度(m)',
-      },
       labels: {
         formatter: function (value: number) {
           return value.toFixed(1) + 'm';

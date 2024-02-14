@@ -95,9 +95,6 @@ export function PressureChart({
       type: 'numeric' as 'numeric',
     },
     yaxis: {
-      title: {
-        text: '気圧(hPa)',
-      },
       labels: {
         formatter: function (value: number) {
           return value.toFixed(1) + 'hPa';

@@ -90,6 +90,7 @@ const GraphView: React.FC<Props> = ({ oneData, data, recordTime, airTime, charge
                   <Tab className='ud-medium'>高度</Tab>
                   <Tab className='ud-medium'>湿度</Tab>
                   <Tab className='ud-medium'>気圧</Tab>
+                  <Tab className='ud-medium'>記録メモ</Tab>
                   <Tab className='ud-medium'>生データ(CSV)</Tab>
                 </TabList>
 
@@ -104,11 +105,15 @@ const GraphView: React.FC<Props> = ({ oneData, data, recordTime, airTime, charge
                   </TabPanel>
                   <TabPanel h='93%' style={{ overflow: 'auto' }}>
                     <TempChart
-                      data={data}
-                      recordTime={recordTime}
-                      airTime={airTime}
-                      chargeTime={chargeTime}
-                      height={420}
+                      data={oneData['rawdata']}
+                      recordTime={oneData['recordTime']}
+                      airTime={oneData['airTime']}
+                      chargeTime={oneData['chargeTime']}
+                      a0_location={oneData['a0_location']}
+                      a1_location={oneData['a1_location']}
+                      a2_location={oneData['a2_location']}
+                      a3_location={oneData['a3_location']}
+                      height={500}
                     />
                   </TabPanel>
                   <TabPanel>
@@ -117,7 +122,7 @@ const GraphView: React.FC<Props> = ({ oneData, data, recordTime, airTime, charge
                       recordTime={recordTime}
                       airTime={airTime}
                       chargeTime={chargeTime}
-                      height={420}
+                      height={500}
                     />
                   </TabPanel>
                   <TabPanel>
@@ -126,7 +131,7 @@ const GraphView: React.FC<Props> = ({ oneData, data, recordTime, airTime, charge
                       recordTime={recordTime}
                       airTime={airTime}
                       chargeTime={chargeTime}
-                      height={420}
+                      height={500}
                     />
                   </TabPanel>
                   <TabPanel>
@@ -135,8 +140,19 @@ const GraphView: React.FC<Props> = ({ oneData, data, recordTime, airTime, charge
                       recordTime={recordTime}
                       airTime={airTime}
                       chargeTime={chargeTime}
-                      height={420}
+                      height={500}
                     />
+                  </TabPanel>
+                  <TabPanel h='93%' style={{ overflow: 'auto' }}>
+                    {oneData['recordNote'] ? (
+                      <Text h='100%' className='ud' style={{ whiteSpace: 'pre-wrap' }}>
+                        {oneData['recordNote']}
+                      </Text>
+                    ) : (
+                      <Text h='100%' className='ud-medium'>
+                        ノートなし
+                      </Text>
+                    )}
                   </TabPanel>
                   <TabPanel h='93%' style={{ overflow: 'auto' }}>
                     <Textarea
@@ -149,9 +165,6 @@ const GraphView: React.FC<Props> = ({ oneData, data, recordTime, airTime, charge
                 </TabPanels>
               </Tabs>
             </ModalBody>
-            <ModalFooter>
-              <Button onClick={onClose}>Close</Button>
-            </ModalFooter>
           </ModalContent>
         </Modal>
       ) : (

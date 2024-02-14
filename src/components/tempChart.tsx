@@ -65,12 +65,20 @@ export function TempChart({
   chargeTime,
   airTime,
   height,
+  a0_location,
+  a1_location,
+  a2_location,
+  a3_location,
 }: {
   data: string;
   recordTime: string;
   chargeTime: string;
   airTime: string;
   height?: number | undefined;
+  a0_location: string;
+  a1_location: string;
+  a2_location: string;
+  a3_location: string;
 }) {
   if (!data) {
     return <div>データを選択してください</div>;
@@ -95,9 +103,6 @@ export function TempChart({
       type: 'numeric' as 'numeric',
     },
     yaxis: {
-      title: {
-        text: '温度(℃)',
-      },
       labels: {
         formatter: function (value: number) {
           return value + '℃';
@@ -233,7 +238,73 @@ export function TempChart({
               background: 'transparent',
             },
 
-            text: 'Max ' + n_data['a0'].reduce(aryMax).toString() + '℃',
+            text: 'a0 ' + n_data['a0'].reduce(aryMax).toString() + '℃',
+          },
+        },
+        {
+          x: n_data['time'][n_data['a1'].indexOf(n_data['a1'].reduce(aryMax))],
+          y: n_data['a1'].reduce(aryMax),
+          marker: {
+            size: 4,
+            fillColor: '#fff',
+            strokeColor: 'red',
+            radius: 2,
+            cssClass: 'apexcharts-custom-class',
+          },
+          label: {
+            borderColor: 'transparent',
+            offsetY: 0,
+            fontSize: '10px',
+            style: {
+              color: 'red',
+              background: 'transparent',
+            },
+
+            text: 'a1 ' + n_data['a1'].reduce(aryMax).toString() + '℃',
+          },
+        },
+        {
+          x: n_data['time'][n_data['a2'].indexOf(n_data['a2'].reduce(aryMax))],
+          y: n_data['a2'].reduce(aryMax),
+          marker: {
+            size: 4,
+            fillColor: '#fff',
+            strokeColor: 'red',
+            radius: 2,
+            cssClass: 'apexcharts-custom-class',
+          },
+          label: {
+            borderColor: 'transparent',
+            offsetY: 0,
+            fontSize: '10px',
+            style: {
+              color: 'red',
+              background: 'transparent',
+            },
+
+            text: 'a2 ' + n_data['a2'].reduce(aryMax).toString() + '℃',
+          },
+        },
+        {
+          x: n_data['time'][n_data['a3'].indexOf(n_data['a3'].reduce(aryMax))],
+          y: n_data['a3'].reduce(aryMax),
+          marker: {
+            size: 4,
+            fillColor: '#fff',
+            strokeColor: 'red',
+            radius: 2,
+            cssClass: 'apexcharts-custom-class',
+          },
+          label: {
+            borderColor: 'transparent',
+            offsetY: 0,
+            fontSize: '10px',
+            style: {
+              color: 'red',
+              background: 'transparent',
+            },
+
+            text: 'a3 ' + n_data['a3'].reduce(aryMax).toString() + '℃',
           },
         },
       ],
@@ -246,19 +317,19 @@ export function TempChart({
       data: n_data['temperature'],
     },
     {
-      name: 'a0',
+      name: a0_location != 'None' ? 'a0 ' + a0_location : 'a0',
       data: n_data['a0'],
     },
     {
-      name: 'a1',
+      name: a1_location != 'None' ? 'a1 ' + a1_location : 'a1',
       data: n_data['a1'],
     },
     {
-      name: 'a2',
+      name: a2_location != 'None' ? 'a2 ' + a2_location : 'a2',
       data: n_data['a2'],
     },
     {
-      name: 'a3',
+      name: a3_location != 'None' ? 'a3 ' + a3_location : 'a3',
       data: n_data['a3'],
     },
   ];
