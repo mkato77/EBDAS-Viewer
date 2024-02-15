@@ -715,25 +715,28 @@ type dataRow = {
                     a1_location={oneData['a1_location']}
                     a2_location={oneData['a2_location']}
                     a3_location={oneData['a3_location']}
-                    height={300}
+                    height={250}
                   />
                   <AltitudeChart
                     data={oneData['rawdata']}
                     recordTime={oneData['recordTime']}
                     airTime={oneData['airTime']}
                     chargeTime={oneData['chargeTime']}
+                    height={250}
                   />
                   <HumidityChart
                     data={oneData['rawdata']}
                     recordTime={oneData['recordTime']}
                     airTime={oneData['airTime']}
                     chargeTime={oneData['chargeTime']}
+                    height={250}
                   />
                   <PressureChart
                     data={oneData['rawdata']}
                     recordTime={oneData['recordTime']}
                     airTime={oneData['airTime']}
                     chargeTime={oneData['chargeTime']}
+                    height={250}
                   />
                 </SimpleGrid>
               </GridItem>

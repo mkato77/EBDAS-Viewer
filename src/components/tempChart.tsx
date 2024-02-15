@@ -97,9 +97,6 @@ export function TempChart({
         'fot-udkakugo-large-pr6n, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Hiragino Sans, Noto Sans CJK JP, Original Yu Gothic, Yu Gothic, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Sans Emoji',
     },
     xaxis: {
-      title: {
-        text: '時間(s)',
-      },
       categories: n_data['time'],
       type: 'numeric' as 'numeric',
     },
