@@ -39,6 +39,8 @@ import {
   Td,
   TableCaption,
   TableContainer,
+  Tooltip,
+  Spinner,
 } from '@chakra-ui/react';
 import { ArrowPathIcon } from '@heroicons/react/20/solid';
 import { ColDef } from 'ag-grid-community/dist/lib/entities/colDef';
@@ -100,6 +102,7 @@ const App: NextPage = () => {
   const [directoryHandle, setDirectoryHandle] = useState<FileSystemDirectoryHandle | null>(null);
   const gridRef = useRef<AgGridReact<tableData[]>>(null);
   const toast = useToast();
+  const [isFileLoading, setIsFileLoading] = useState(false);
 
   const handleFileOpen = async (selected: boolean) => {
     console.log(selected);
@@ -124,6 +127,7 @@ const App: NextPage = () => {
             status: 'error',
             isClosable: true,
           });
+          setIsFileLoading(false);
           return;
         }
       }
@@ -139,6 +143,7 @@ const App: NextPage = () => {
     } else {
       // buffer = bufferCache;
     }
+    setIsFileLoading(true);
     try {
       if (dicHnd == null) {
         return;
@@ -191,6 +196,7 @@ const App: NextPage = () => {
 
       // Appbarに更新アイコンボタンを表示する処理
       setShowRefreshIcon(true);
+      setIsFileLoading(false);
       if (selected) {
         toast({
           title: `データベースを読み込みました`,
@@ -227,6 +233,7 @@ const App: NextPage = () => {
         });
         return;
       }
+      setIsFileLoading(true);
       const file = files[0];
       const buffer = await file.arrayBuffer();
       const SQL = await initSqlJs({
@@ -270,6 +277,7 @@ const App: NextPage = () => {
 
       // Appbarの更新アイコンボタンを非表示にする処理
       setShowRefreshIcon(false);
+      setIsFileLoading(false);
       toast({
         title: `データベースを読み込みました`,
         isClosable: true,
@@ -627,26 +635,37 @@ type dataRow = {
       <Box h='100%' style={{ height: '100vh', overflow: 'clip' }}>
         <AppBar>
           <Flex alignItems='center'>
-            <IconButton
-              icon={<CalendarIcon />}
-              aria-label='change view'
-              onClick={changeView}
-              bg='transparent'
-            />
-            <IconButton
-              icon={<RepeatIcon />}
-              aria-label='Refresh'
-              onClick={handleRefresh}
-              display={showRefreshIcon ? 'block' : 'none'} // 更新アイコンの表示制御
-              bg='transparent'
-            />
+            <Spinner display={isFileLoading ? 'block' : 'none'} />
+            <Tooltip label='表示レイアウトを変更' className='ud'>
+              <IconButton
+                icon={<CalendarIcon />}
+                aria-label='change view'
+                onClick={changeView}
+                bg='transparent'
+              />
+            </Tooltip>
+            <Tooltip label='データを更新' className='ud'>
+              <IconButton
+                icon={<RepeatIcon />}
+                aria-label='Refresh'
+                onClick={handleRefresh}
+                display={showRefreshIcon ? 'block' : 'none'} // 更新アイコンの表示制御
+                bg='transparent'
+              />
+            </Tooltip>
             {/* <IconButton
               icon={<DragHandleIcon />}
               aria-label='ピン留めリセット'
               onClick={clearPinned}
               bg='transparent'
             /> */}
-            <Button as='span' onClick={() => handleFileOpen(false)} ml={4}>
+            <Button
+              as='span'
+              onClick={() => handleFileOpen(false)}
+              ml={4}
+              // isLoading={isFileLoading}
+              // loadingText='Loading...'
+            >
               Open
             </Button>
           </Flex>
