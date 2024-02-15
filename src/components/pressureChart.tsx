@@ -85,7 +85,8 @@ export function PressureChart({
   const option = {
     chart: {
       id: 'humidity',
-      fontFamily: 'a-otf-ud-shin-go-pr6n',
+      fontFamily:
+        'fot-udkakugo-large-pr6n, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Hiragino Sans, Noto Sans CJK JP, Original Yu Gothic, Yu Gothic, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Sans Emoji',
     },
     xaxis: {
       title: {

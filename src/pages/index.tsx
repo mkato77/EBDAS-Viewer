@@ -97,17 +97,19 @@ const App: NextPage = () => {
   const [view, setView] = useState<number>(0);
   const [accordionDefault, setAccordionDefault] = useState<any[]>([]);
   const [isSelected, setIsSelected] = useState<boolean>(false);
-
+  const [directoryHandle, setDirectoryHandle] = useState<FileSystemDirectoryHandle | null>(null);
   const gridRef = useRef<AgGridReact<tableData[]>>(null);
   const toast = useToast();
 
   const handleFileOpen = async (selected: boolean) => {
     console.log(selected);
-    let buffer = bufferCache;
-    if (selected == false || bufferCache == null) {
-      let files: FileSystemFileHandle[] = [];
+    // let buffer = bufferCache;
+    let dicHnd = directoryHandle;
+    if (selected == false || dicHnd == null) {
+      // let files: FileSystemFileHandle[] = [];
       try {
-        files = await window.showOpenFilePicker();
+        dicHnd = await window.showDirectoryPicker();
+        setDirectoryHandle(dicHnd);
       } catch (error: any) {
         if (error.name.includes('SecurityError') || error.name.includes('TypeError')) {
           console.error('File System Access API でファイルを開けませんでした。エラー：', error);
@@ -125,23 +127,26 @@ const App: NextPage = () => {
           return;
         }
       }
-      if (!files) {
-        toast({
-          title: `ファイルが選択されませんでした。`,
-          description: '再度ファイルを選択してください',
-          status: 'error',
-          isClosable: true,
-        });
-        return;
-      }
-      const file = files[0];
-      const fileHandle = await file.getFile();
-      buffer = await fileHandle.arrayBuffer();
-      setBuffer(await fileHandle.arrayBuffer());
+      // if (!files) {
+      //   toast({
+      //     title: `ファイルが選択されませんでした。`,
+      //     description: '再度ファイルを選択してください',
+      //     status: 'error',
+      //     isClosable: true,
+      //   });
+      //   return;
+      // }
     } else {
-      buffer = bufferCache;
+      // buffer = bufferCache;
     }
     try {
+      if (dicHnd == null) {
+        return;
+      }
+      // EBDAS_data.dbファイルを開く
+      const fileHandle = await dicHnd.getFileHandle('EBDAS_data.db');
+      const file = await fileHandle.getFile();
+      const buffer = await file.arrayBuffer();
       const SQL = await initSqlJs({
         locateFile: (file) => new URL('sql.js/dist/sql-wasm.wasm', import.meta.url).toString(),
       });
@@ -186,11 +191,18 @@ const App: NextPage = () => {
 
       // Appbarに更新アイコンボタンを表示する処理
       setShowRefreshIcon(true);
-      toast({
-        title: `データベースを読み込みました`,
-        description: '更新ボタンを利用できます。',
-        isClosable: true,
-      });
+      if (selected) {
+        toast({
+          title: `データベースを読み込みました`,
+          isClosable: true,
+        });
+      } else {
+        toast({
+          title: `データベースを読み込みました`,
+          description: '更新ボタンを利用できます。',
+          isClosable: true,
+        });
+      }
     } catch (error) {
       console.error('File System Access API でファイルを開けませんでした。エラー：', error);
       // File System Access API で開かなかった（従来の方法でファイルを開いた）場合
@@ -488,6 +500,7 @@ type dataRow = {
                   a1_location={oneData['a1_location']}
                   a2_location={oneData['a2_location']}
                   a3_location={oneData['a3_location']}
+                  height={300}
                 />
               </AccordionPanel>
             </AccordionItem>
@@ -683,6 +696,7 @@ type dataRow = {
                     a1_location={oneData['a1_location']}
                     a2_location={oneData['a2_location']}
                     a3_location={oneData['a3_location']}
+                    height={300}
                   />
                   <AltitudeChart
                     data={oneData['rawdata']}
