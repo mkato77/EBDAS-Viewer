@@ -314,23 +314,32 @@ export function TempChart({
       name: '温度',
       data: n_data['temperature'],
     },
-    {
-      name: a0_location != 'None' ? 'a0 ' + a0_location : 'a0',
-      data: n_data['a0'],
-    },
-    {
-      name: a1_location != 'None' ? 'a1 ' + a1_location : 'a1',
-      data: n_data['a1'],
-    },
-    {
-      name: a2_location != 'None' ? 'a2 ' + a2_location : 'a2',
-      data: n_data['a2'],
-    },
-    {
-      name: a3_location != 'None' ? 'a3 ' + a3_location : 'a3',
-      data: n_data['a3'],
-    },
   ];
+
+  if (a0_location != 'None') {
+    series.push({
+      name: 'a0 ' + a0_location,
+      data: n_data['a0'],
+    });
+  }
+  if (a1_location != 'None') {
+    series.push({
+      name: 'a1 ' + a1_location,
+      data: n_data['a1'],
+    });
+  }
+  if (a2_location != 'None') {
+    series.push({
+      name: 'a2 ' + a2_location,
+      data: n_data['a2'],
+    });
+  }
+  if (a3_location != 'None') {
+    series.push({
+      name: 'a3 ' + a3_location,
+      data: n_data['a3'],
+    });
+  }
 
   return (
     <>
