@@ -105,7 +105,7 @@ const App: NextPage = () => {
   const [isFileLoading, setIsFileLoading] = useState(false);
 
   const handleFileOpen = async (selected: boolean) => {
-    console.log(selected);
+    // console.log(selected);
     // let buffer = bufferCache;
     let dicHnd = directoryHandle;
     if (selected == false || dicHnd == null) {
@@ -159,7 +159,7 @@ const App: NextPage = () => {
       const res = db.exec('SELECT * FROM data');
 
       const fileData = res[0].values.map((row: any, index: number) => {
-        console.log(row[3].split('_')[0]);
+        // console.log(row[3].split('_')[0]);
         return {
           id: index,
           baloon: row[1],
@@ -188,7 +188,7 @@ const App: NextPage = () => {
         };
       });
 
-      console.log(fileData);
+      // console.log(fileData);
 
       // File System Access API で開いた場合
       setRowData(fileData);
@@ -291,7 +291,7 @@ const App: NextPage = () => {
   const handleRefresh = async () => {
     if (isFileOpened) {
       // ファイルを再度読み取り、画面を更新する処理
-      console.log('handle');
+      // console.log('handle');
       handleFileOpen(true);
     } else {
       // File System Access API でファイルを開いていない場合のエラーメッセージを表示する処理
@@ -309,12 +309,8 @@ const App: NextPage = () => {
   };
 
   const changeView = () => {
-    if (view == 0) {
-      setView(1);
-    } else {
-      setView(0);
-    }
-    console.log('change view');
+    setView((prev) => (prev + 1) % 3);
+    // console.log('change view');
   };
 
   /*
@@ -671,7 +667,36 @@ type dataRow = {
           </Flex>
         </AppBar>
         <Box p={{ top: 0, right: 4, left: 4 }} zIndex='base' h='100%' style={{ overflow: 'auto' }}>
-          {view == 1 ? (
+          {view == 0 ? (
+            <Box h='100%' style={{ height: '100%' }}>
+              <Box className='ag-theme-quartz' h='92%'>
+                <AgGridReact
+                  rowData={rowData}
+                  localeText={AG_GRID_LOCALE_JP}
+                  columnDefs={colDefs}
+                  defaultColDef={{
+                    resizable: true,
+                    filter: true,
+                    sortable: true,
+                    minWidth: 100,
+                    flex: 1,
+                    floatingFilter: true,
+                  }}
+                  rowGroupPanelShow='always'
+                  pivotPanelShow='always'
+                  onRowClicked={(params: any) => {
+                    setOneData(params.data);
+                    setIsSelected(true);
+                    setView(2);
+                    // console.log(params.data);
+                  }}
+                  pagination={true}
+                  paginationPageSize={500}
+                  rowHeight={40}
+                />
+              </Box>
+            </Box>
+          ) : view == 1 ? (
             <Grid gap={0}>
               <GridItem rowSpan={1}>
                 <Box className='ag-theme-quartz' style={{ height: '430px', width: '100%' }}>
@@ -689,14 +714,14 @@ type dataRow = {
                       sortable: true,
                       minWidth: 100,
                       floatingFilter: true,
+                      flex: 1,
                     }}
                     rowGroupPanelShow='always'
                     pivotPanelShow='always'
                     onRowClicked={(params: any) => {
                       setIsSelected(true);
                       setOneData(params.data);
-                      console.log(params.data);
-                      // onOpen();
+                      // console.log(params.data);
                     }}
                     pagination={true}
                     paginationPageSize={500}
@@ -762,7 +787,7 @@ type dataRow = {
                     onRowClicked={(params: any) => {
                       setOneData(params.data);
                       setIsSelected(true);
-                      console.log(params.data);
+                      // console.log(params.data);
                       // onOpen();
                     }}
                     pagination={true}
@@ -776,13 +801,13 @@ type dataRow = {
               </GridItem>
             </Grid>
           )}
-          <Drawer onClose={onClose} isOpen={isOpen} size='xl'>
+          <Drawer onClose={onClose} isOpen={isOpen} size='md'>
             <DrawerOverlay />
             <DrawerContent>
               <DrawerCloseButton />
-              <DrawerHeader>{`${oneData['id']} のデータ`}</DrawerHeader>
+              {/* <DrawerHeader>{`${oneData['id']} のデータ`}</DrawerHeader> */}
               <DrawerBody>
-                <Text>{oneData['rawdata']}</Text>
+                <Sidebar />
               </DrawerBody>
             </DrawerContent>
           </Drawer>
