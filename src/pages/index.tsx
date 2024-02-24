@@ -351,6 +351,7 @@ type dataRow = {
       pinned: 'left',
       editable: true,
       minWidth: 60,
+      type: 'rightAligned',
     },
     {
       field: 'id',
@@ -358,9 +359,9 @@ type dataRow = {
       headerName: '#',
       filter: 'agNumberColumnFilter',
       type: 'numericColumn',
-      width: 100,
+      width: 80,
       pinned: 'left',
-      minWidth: 100,
+      minWidth: 80,
     },
     {
       field: 'baloon',
