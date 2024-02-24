@@ -162,6 +162,7 @@ const App: NextPage = () => {
       const fileData = res[0].values.map((row: any, index: number) => {
         // console.log(row[3].split('_')[0]);
         return {
+          boolean: false,
           id: row[0],
           baloon: row[1],
           weight: row[2],
@@ -246,6 +247,7 @@ const App: NextPage = () => {
 
       const fileData = res[0].values.map((row: any, index: number) => {
         return {
+          boolean: false,
           id: row[0],
           baloon: row[1],
           weight: row[2],
@@ -342,15 +344,32 @@ type dataRow = {
 
   const [colDefs, setColDefs] = useState<ColDef[]>([
     {
+      headerName: '',
+      field: 'boolean',
+      cellEditor: 'agCheckboxCellEditor',
+      width: 60,
+      pinned: 'left',
+      editable: true,
+      minWidth: 60,
+    },
+    {
       field: 'id',
       cellDataType: 'number',
       headerName: '#',
       filter: 'agNumberColumnFilter',
       type: 'numericColumn',
-      width: 30,
+      width: 100,
       pinned: 'left',
+      minWidth: 100,
     },
-    { field: 'baloon', cellDataType: 'text', headerName: '機体', pinned: 'left', width: 120 },
+    {
+      field: 'baloon',
+      cellDataType: 'text',
+      headerName: '機体',
+      pinned: 'left',
+      width: 130,
+      minWidth: 130,
+    },
     { field: 'weight', headerName: '重量', cellDataType: 'number', pinned: 'left', width: 50 },
     { field: 'recordTime', headerName: '記録[s]' },
     { field: 'chargeTime', headerName: '充填[s]' },
