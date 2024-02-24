@@ -69,6 +69,7 @@ export function TempChart({
   a1_location,
   a2_location,
   a3_location,
+  showLavel = false,
 }: {
   data: string;
   recordTime: string;
@@ -79,6 +80,7 @@ export function TempChart({
   a1_location: string;
   a2_location: string;
   a3_location: string;
+  showLavel?: boolean | undefined;
 }) {
   if (!data) {
     return <div>データを選択してください</div>;
@@ -117,6 +119,9 @@ export function TempChart({
     markers: {
       size: 0,
       style: 'hollow',
+    },
+    stroke: {
+      width: 3,
     },
     annotations: {
       yaxis: [
@@ -221,7 +226,7 @@ export function TempChart({
           x: n_data['time'][n_data['a0'].indexOf(n_data['a0'].reduce(aryMax))],
           y: n_data['a0'].reduce(aryMax),
           marker: {
-            size: 4,
+            size: showLavel ? 4 : 0,
             fillColor: '#fff',
             strokeColor: 'red',
             radius: 2,
@@ -230,20 +235,20 @@ export function TempChart({
           label: {
             borderColor: 'transparent',
             offsetY: 0,
-            fontSize: '10px',
+            fontSize: showLavel ? '10px' : '0px',
             style: {
               color: 'red',
               background: 'transparent',
             },
 
-            text: 'a0 ' + n_data['a0'].reduce(aryMax).toString() + '℃',
+            text: showLavel ? 'a0 ' + n_data['a0'].reduce(aryMax).toString() + '℃' : '',
           },
         },
         {
           x: n_data['time'][n_data['a1'].indexOf(n_data['a1'].reduce(aryMax))],
           y: n_data['a1'].reduce(aryMax),
           marker: {
-            size: 4,
+            size: showLavel ? 4 : 0,
             fillColor: '#fff',
             strokeColor: 'red',
             radius: 2,
@@ -252,20 +257,20 @@ export function TempChart({
           label: {
             borderColor: 'transparent',
             offsetY: 0,
-            fontSize: '10px',
+            fontSize: showLavel ? '10px' : '0px',
             style: {
               color: 'red',
               background: 'transparent',
             },
 
-            text: 'a1 ' + n_data['a1'].reduce(aryMax).toString() + '℃',
+            text: showLavel ? 'a1 ' + n_data['a1'].reduce(aryMax).toString() + '℃' : '',
           },
         },
         {
           x: n_data['time'][n_data['a2'].indexOf(n_data['a2'].reduce(aryMax))],
           y: n_data['a2'].reduce(aryMax),
           marker: {
-            size: 4,
+            size: showLavel ? 4 : 0,
             fillColor: '#fff',
             strokeColor: 'red',
             radius: 2,
@@ -274,20 +279,20 @@ export function TempChart({
           label: {
             borderColor: 'transparent',
             offsetY: 0,
-            fontSize: '10px',
+            fontSize: showLavel ? '10px' : '0px',
             style: {
               color: 'red',
               background: 'transparent',
             },
 
-            text: 'a2 ' + n_data['a2'].reduce(aryMax).toString() + '℃',
+            text: showLavel ? 'a2 ' + n_data['a2'].reduce(aryMax).toString() + '℃' : '',
           },
         },
         {
           x: n_data['time'][n_data['a3'].indexOf(n_data['a3'].reduce(aryMax))],
           y: n_data['a3'].reduce(aryMax),
           marker: {
-            size: 4,
+            size: showLavel ? 4 : 0,
             fillColor: '#fff',
             strokeColor: 'red',
             radius: 2,
@@ -296,13 +301,13 @@ export function TempChart({
           label: {
             borderColor: 'transparent',
             offsetY: 0,
-            fontSize: '10px',
+            fontSize: showLavel ? '10px' : '0px',
             style: {
               color: 'red',
               background: 'transparent',
             },
 
-            text: 'a3 ' + n_data['a3'].reduce(aryMax).toString() + '℃',
+            text: showLavel ? 'a3 ' + n_data['a3'].reduce(aryMax).toString() + '℃' : '',
           },
         },
       ],

@@ -162,7 +162,7 @@ const App: NextPage = () => {
       const fileData = res[0].values.map((row: any, index: number) => {
         // console.log(row[3].split('_')[0]);
         return {
-          id: index,
+          id: row[0],
           baloon: row[1],
           weight: row[2],
           datetime: row[3].split('_')[0],
@@ -246,7 +246,7 @@ const App: NextPage = () => {
 
       const fileData = res[0].values.map((row: any, index: number) => {
         return {
-          id: index,
+          id: row[0],
           baloon: row[1],
           weight: row[2],
           datetime: row[3].split('_')[0],
@@ -406,9 +406,10 @@ type dataRow = {
               recordTime={oneData['recordTime']}
               airTime={oneData['airTime']}
               chargeTime={oneData['chargeTime']}
+              actualAirTime={oneData['actualAirTime']}
             />
           </Box>
-          <Accordion defaultIndex={oneData['recordNote'] ? [0] : []} allowMultiple>
+          <Accordion defaultIndex={oneData['recordNote'] ? [0, 2] : [1]} allowMultiple>
             {oneData['recordNote'] ? (
               <AccordionItem>
                 <h2>

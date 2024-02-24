@@ -45,11 +45,19 @@ interface Props {
   data: string;
   recordTime: string;
   airTime: string;
+  actualAirTime: string;
   chargeTime: string;
   oneData: DatasetRecord;
 }
 
-const GraphView: React.FC<Props> = ({ oneData, data, recordTime, airTime, chargeTime }) => {
+const GraphView: React.FC<Props> = ({
+  oneData,
+  data,
+  recordTime,
+  airTime,
+  chargeTime,
+  actualAirTime,
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   /*
@@ -76,9 +84,15 @@ const GraphView: React.FC<Props> = ({ oneData, data, recordTime, airTime, charge
                   {`#${oneData['id']}`}
                 </Badge>
                 {`${oneData['baloon']} ${oneData['weight']}g`}
-                <Text fontSize={16} pl={4} className='ud-medium'>
-                  充填: {chargeTime}s / 飛行: {airTime}s
-                </Text>
+                {actualAirTime ? (
+                  <Text fontSize={16} pl={4} className='ud-medium'>
+                    充填: {chargeTime}s / 滞空: {actualAirTime}s
+                  </Text>
+                ) : (
+                  <Text fontSize={16} pl={4} className='ud-medium'>
+                    充填: {chargeTime}s / 滞空(旧): {airTime}s
+                  </Text>
+                )}
               </Box>
             </ModalHeader>
             <ModalCloseButton />
@@ -113,7 +127,8 @@ const GraphView: React.FC<Props> = ({ oneData, data, recordTime, airTime, charge
                       a1_location={oneData['a1_location']}
                       a2_location={oneData['a2_location']}
                       a3_location={oneData['a3_location']}
-                      height={500}
+                      showLavel={true}
+                      height={520}
                     />
                   </TabPanel>
                   <TabPanel>
@@ -122,7 +137,7 @@ const GraphView: React.FC<Props> = ({ oneData, data, recordTime, airTime, charge
                       recordTime={recordTime}
                       airTime={airTime}
                       chargeTime={chargeTime}
-                      height={500}
+                      height={520}
                     />
                   </TabPanel>
                   <TabPanel>
@@ -131,7 +146,7 @@ const GraphView: React.FC<Props> = ({ oneData, data, recordTime, airTime, charge
                       recordTime={recordTime}
                       airTime={airTime}
                       chargeTime={chargeTime}
-                      height={500}
+                      height={520}
                     />
                   </TabPanel>
                   <TabPanel>
@@ -140,7 +155,7 @@ const GraphView: React.FC<Props> = ({ oneData, data, recordTime, airTime, charge
                       recordTime={recordTime}
                       airTime={airTime}
                       chargeTime={chargeTime}
-                      height={500}
+                      height={520}
                     />
                   </TabPanel>
                   <TabPanel h='93%' style={{ overflow: 'auto' }}>
@@ -184,9 +199,15 @@ const GraphView: React.FC<Props> = ({ oneData, data, recordTime, airTime, charge
               </Button>
             </Flex>
           </Box>
-          <Text fontSize={16} pl={4} className='ud-medium'>
-            充填: {chargeTime}s / 飛行: {airTime}s
-          </Text>
+          {actualAirTime ? (
+            <Text fontSize={16} pl={4} className='ud-medium'>
+              充填: {chargeTime}s / 滞空: {actualAirTime}s
+            </Text>
+          ) : (
+            <Text fontSize={16} pl={4} className='ud-medium'>
+              充填: {chargeTime}s / 滞空(旧): {airTime}s
+            </Text>
+          )}
         </>
       )}
     </>
