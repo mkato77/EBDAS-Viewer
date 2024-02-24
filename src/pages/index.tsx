@@ -355,7 +355,7 @@ type dataRow = {
     { field: 'recordTime', headerName: '記録[s]' },
     { field: 'chargeTime', headerName: '充填[s]' },
     { field: 'airTime', headerName: '滞空[s]' },
-    { field: 'actualAirTime', headerName: '滞空A[s]' },
+    { field: 'actualAirTime', headerName: 'A滞空[s]' },
     { field: 'temperature_ave', headerName: '温度[℃]' },
     { field: 'a_ave_init', headerName: '内部(離陸時)[℃]' },
     { field: 'pressure_init', headerName: '気圧[hPa]' },
