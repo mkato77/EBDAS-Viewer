@@ -372,34 +372,34 @@ type dataRow = {
       minWidth: 130,
     },
     { field: 'weight', headerName: '重量', cellDataType: 'number', pinned: 'left', width: 50 },
-    { field: 'recordTime', headerName: '記録[s]' },
-    { field: 'chargeTime', headerName: '充填[s]' },
-    { field: 'airTime', headerName: '滞空[s]' },
-    { field: 'actualAirTime', headerName: 'A滞空[s]' },
-    { field: 'temperature_ave', headerName: '温度[℃]' },
-    { field: 'a_ave_init', headerName: '内部(離陸時)[℃]' },
-    { field: 'pressure_init', headerName: '気圧[hPa]' },
-    { field: 'humidity_init', headerName: '湿度[%]' },
-    { field: 'altitude_max', headerName: '最大高度[m]' },
-    { field: 'a0_max', headerName: 'A0max' },
-    { field: 'a1_max', headerName: 'A1max' },
-    { field: 'a2_max', headerName: 'A2max' },
-    { field: 'a3_max', headerName: 'A3max' },
-    { field: 'a0_location', headerName: 'A0loc' },
-    { field: 'a1_location', headerName: 'A1loc' },
-    { field: 'a2_location', headerName: 'A2loc' },
-    { field: 'a3_location', headerName: 'A3loc' },
     {
       field: 'datetime',
       cellDataType: 'dateString',
       filter: 'agDateColumnFilter',
       headerName: '日付',
-      minWidth: 150,
+      minWidth: 105,
     },
-    { field: 'time', headerName: '時刻', width: 600 },
-    { field: 'recordLocation', headerName: '記録地点', minWidth: 150 },
+    { field: 'time', headerName: '時刻', width: 90, minWidth: 90 },
+    { field: 'recordLocation', headerName: '記録地点', minWidth: 140 },
+    { field: 'chargeTime', headerName: '充填[s]', minWidth: 90 },
+    { field: 'airTime', headerName: '滞空[s]', minWidth: 90 },
+    { field: 'actualAirTime', headerName: 'A滞空[s]', minWidth: 90 },
+    { field: 'temperature_ave', headerName: '温度[℃]', minWidth: 90 },
+    { field: 'pressure_init', headerName: '気圧[hPa]', minWidth: 90 },
+    { field: 'humidity_init', headerName: '湿度[%]', minWidth: 90 },
+    { field: 'altitude_max', headerName: '最大高度[m]', minWidth: 90 },
+    { field: 'a0_max', headerName: 'A0max', minWidth: 90 },
+    { field: 'a1_max', headerName: 'A1max', minWidth: 90 },
+    { field: 'a2_max', headerName: 'A2max', minWidth: 90 },
+    { field: 'a3_max', headerName: 'A3max', minWidth: 90 },
+    { field: 'a0_location', headerName: 'A0loc', minWidth: 90 },
+    { field: 'a1_location', headerName: 'A1loc', minWidth: 90 },
+    { field: 'a2_location', headerName: 'A2loc', minWidth: 90 },
+    { field: 'a3_location', headerName: 'A3loc', minWidth: 90 },
     { field: 'rawdata', hide: true },
     { field: 'recordNote', headerName: 'メモ', minWidth: 300 },
+    { field: 'a_ave_init', headerName: '内部(離陸時)[℃]' },
+    { field: 'recordTime', headerName: '記録[s]' },
   ]);
   const [gridApi, setGridApi] = useState<any>(null);
   // const [a, setA] = useState(false);
@@ -429,7 +429,10 @@ type dataRow = {
               actualAirTime={oneData['actualAirTime']}
             />
           </Box>
-          <Accordion defaultIndex={oneData['recordNote'] ? [0, 2] : [1]} allowMultiple>
+          <Accordion
+            defaultIndex={oneData['recordNote'] ? [0, 2, 3, 4, 5] : [1, 2, 3, 4]}
+            allowMultiple
+          >
             {oneData['recordNote'] ? (
               <AccordionItem>
                 <h2>
@@ -717,7 +720,7 @@ type dataRow = {
                   }}
                   pagination={true}
                   paginationPageSize={500}
-                  rowHeight={40}
+                  rowHeight={30}
                 />
               </Box>
             </Box>
@@ -750,7 +753,7 @@ type dataRow = {
                     }}
                     pagination={true}
                     paginationPageSize={500}
-                    rowHeight={40}
+                    rowHeight={30}
                   />
                 </Box>
               </GridItem>
@@ -817,7 +820,7 @@ type dataRow = {
                     }}
                     pagination={true}
                     paginationPageSize={500}
-                    rowHeight={40}
+                    rowHeight={30}
                   />
                 </Box>
               </GridItem>
