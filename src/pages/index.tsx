@@ -706,8 +706,8 @@ type dataRow = {
                     resizable: true,
                     filter: true,
                     sortable: true,
-                    minWidth: 100,
                     flex: 1,
+                    minWidth: 100,
                     floatingFilter: true,
                   }}
                   rowGroupPanelShow='always'
@@ -715,8 +715,8 @@ type dataRow = {
                   onRowClicked={(params: any) => {
                     setOneData(params.data);
                     setIsSelected(true);
-                    setView(2);
                     // console.log(params.data);
+                    // onOpen();
                   }}
                   pagination={true}
                   paginationPageSize={500}
