@@ -97,7 +97,7 @@ const App: NextPage = () => {
   const [isFileOpened, setIsFileOpened] = useState(false);
   const [showRefreshIcon, setShowRefreshIcon] = useState(false);
   const [bufferCache, setBuffer] = useState<ArrayBufferLike | null>(null);
-  const [view, setView] = useState<number>(0);
+  const [view, setView] = useState<number>(2);
   const [accordionDefault, setAccordionDefault] = useState<any[]>([]);
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [directoryHandle, setDirectoryHandle] = useState<FileSystemDirectoryHandle | null>(null);
