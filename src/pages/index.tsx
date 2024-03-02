@@ -5,7 +5,14 @@ import { NextPage } from 'next';
 // import local.jp.js
 import AG_GRID_LOCALE_JP from '@/config/locale';
 
-import { CalendarIcon, RepeatIcon, DragHandleIcon } from '@chakra-ui/icons';
+import {
+  CalendarIcon,
+  RepeatIcon,
+  DragHandleIcon,
+  CopyIcon,
+  DeleteIcon,
+  Search2Icon,
+} from '@chakra-ui/icons';
 import {
   Button,
   Grid,
@@ -654,11 +661,141 @@ type dataRow = {
     }
   };
 
+  const [count, setCount] = useState(0);
+  const [isFilterOn, setIsFilterOn] = useState(false);
+
   return (
     <>
       <Box h='100%' style={{ height: '100vh', overflow: 'clip' }}>
         <AppBar>
           <Flex alignItems='center'>
+            {isFileOpened && count > 0 ? (
+              <>
+                {/* ag-grid の external フィルター：booleanがtrueの列のみ */}
+                {!isFilterOn ? (
+                  <Button
+                    onClick={() => {
+                      console.log('filter');
+                      console.log(gridApi.getFilterModel());
+                      const currentFilterModel = gridApi.getFilterModel();
+                      const newFilterModel = {
+                        ...currentFilterModel,
+                        boolean: { filterType: 'text', type: 'true', filter: 'false' },
+                      };
+                      gridApi.setFilterModel(newFilterModel);
+                      setIsFilterOn(true);
+                      // toast({
+                      //   title: 'フィルタを適用しました',
+                      //   status: 'info',
+                      //   isClosable: true,
+                      // });
+                    }}
+                    leftIcon={<Search2Icon />}
+                    colorScheme='blue'
+                    variant='ghost'
+                    mr={2}
+                    className='ud-medium'
+                  >
+                    フィルタ
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      interface FilterModel {
+                        [key: string]: any; // フィルターモデルのプロパティの型
+                      }
+
+                      console.log('filter');
+                      console.log(gridApi.getFilterModel());
+                      const currentFilterModel = gridApi.getFilterModel();
+                      const newFilterModel = Object.keys(currentFilterModel).reduce(
+                        (acc: FilterModel, key: string) => {
+                          if (key !== 'boolean') {
+                            acc[key] = currentFilterModel[key];
+                          }
+                          return acc;
+                        },
+                        {},
+                      );
+                      gridApi.setFilterModel(newFilterModel);
+                      setIsFilterOn(false);
+                    }}
+                    colorScheme='red'
+                    variant='outline'
+                    mr={2}
+                    className='ud-medium'
+                  >
+                    フィルタ解除
+                  </Button>
+                )}
+
+                <Button
+                  className='ud-medium'
+                  onClick={() => {
+                    const selectedRows: number[] = [];
+                    let allRowNodes: any = [];
+                    gridApi.forEachNode((node: any) => allRowNodes.push(node.data));
+                    console.log(allRowNodes);
+                    let count: number = 0;
+                    allRowNodes.forEach((rowNode: any) => {
+                      if (rowNode.boolean === true) {
+                        selectedRows.push(rowNode.id);
+                        count++;
+                      }
+                    });
+                    if (count === 0) {
+                      toast({
+                        title: '行が選択されていません',
+                        status: 'error',
+                        isClosable: true,
+                      });
+                      return;
+                    } else {
+                      navigator.clipboard.writeText(selectedRows.join(','));
+                      toast({
+                        title: 'コピーしました',
+                        status: 'success',
+                        isClosable: true,
+                      });
+                    }
+                  }}
+                  colorScheme='teal'
+                  variant='ghost'
+                  leftIcon={<CopyIcon />}
+                >
+                  選択行番号コピー
+                </Button>
+                <Button
+                  mr={6}
+                  className='ud-medium'
+                  onClick={() => {
+                    const allRowNodes: any = [];
+                    gridApi.forEachNode((node: any) => allRowNodes.push(node.data));
+                    allRowNodes.forEach((rowNode: any) => {
+                      if (rowNode.boolean === true) {
+                        rowNode.boolean = false;
+                      }
+                    });
+                    gridApi.refreshCells();
+                    setCount(0);
+                    toast({
+                      title: '選択を解除しました',
+                      status: 'info',
+                      isClosable: true,
+                    });
+                  }}
+                  leftIcon={<DeleteIcon />}
+                  colorScheme='red'
+                  variant='ghost'
+                  ml={2}
+                >
+                  選択解除
+                </Button>
+              </>
+            ) : (
+              <></>
+            )}
+
             <Spinner display={isFileLoading ? 'block' : 'none'} />
             <Tooltip label='表示レイアウトを変更' className='ud'>
               <IconButton
@@ -699,6 +836,22 @@ type dataRow = {
             <Box h='100%' style={{ height: '100%' }}>
               <Box className='ag-theme-quartz' h='92%'>
                 <AgGridReact
+                  // gridApiを設定
+                  onGridReady={(params) => {
+                    setGridApi(params.api);
+                  }}
+                  onCellValueChanged={(params) => {
+                    console.log(params);
+                    // const selectedRows = gridApi.getSelectedRows();
+                    const allRows = gridApi.getRenderedNodes().map((node: any) => node.data);
+                    // const unselectedRows = allRows.filter(
+                    //   (row: any) => !selectedRows.includes(row),
+                    // );
+                    const a = allRows.filter((row: any) => row.boolean === true).length;
+                    setCount(a);
+                    console.log(a);
+                    // Perform the dynamic update here
+                  }}
                   rowData={rowData}
                   localeText={AG_GRID_LOCALE_JP}
                   columnDefs={colDefs}
@@ -732,6 +885,18 @@ type dataRow = {
                     // gridApiを設定
                     onGridReady={(params) => {
                       setGridApi(params.api);
+                    }}
+                    onCellValueChanged={(params) => {
+                      console.log(params);
+                      // const selectedRows = gridApi.getSelectedRows();
+                      const allRows = gridApi.getRenderedNodes().map((node: any) => node.data);
+                      // const unselectedRows = allRows.filter(
+                      //   (row: any) => !selectedRows.includes(row),
+                      // );
+                      const a = allRows.filter((row: any) => row.boolean === true).length;
+                      setCount(a);
+                      console.log(a);
+                      // Perform the dynamic update here
                     }}
                     rowData={rowData}
                     localeText={AG_GRID_LOCALE_JP}
@@ -799,6 +964,22 @@ type dataRow = {
               <GridItem rowSpan={2}>
                 <Box className='ag-theme-quartz' h='92%'>
                   <AgGridReact
+                    // gridApiを設定
+                    onGridReady={(params) => {
+                      setGridApi(params.api);
+                    }}
+                    onCellValueChanged={(params) => {
+                      console.log(params);
+                      // const selectedRows = gridApi.getSelectedRows();
+                      const allRows = gridApi.getRenderedNodes().map((node: any) => node.data);
+                      // const unselectedRows = allRows.filter(
+                      //   (row: any) => !selectedRows.includes(row),
+                      // );
+                      const a = allRows.filter((row: any) => row.boolean === true).length;
+                      setCount(a);
+                      console.log(a);
+                      // Perform the dynamic update here
+                    }}
                     rowData={rowData}
                     localeText={AG_GRID_LOCALE_JP}
                     columnDefs={colDefs}
