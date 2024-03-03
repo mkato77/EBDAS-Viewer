@@ -219,6 +219,21 @@ const App: NextPage = () => {
           isClosable: true,
         });
       }
+      console.log('filter');
+      // console.log(gridApi.getFilterModel());
+      const currentFilterModel = gridApi.getFilterModel();
+      const newFilterModel = Object.keys(currentFilterModel).reduce(
+        (acc: FilterModel, key: string) => {
+          if (key !== 'boolean') {
+            acc[key] = currentFilterModel[key];
+          }
+          return acc;
+        },
+        {},
+      );
+      gridApi.setFilterModel(newFilterModel);
+      setIsFilterOn(false);
+      setCount(0);
     } catch (error) {
       console.error('File System Access API でファイルを開けませんでした。エラー：', error);
       // File System Access API で開かなかった（従来の方法でファイルを開いた）場合
@@ -294,6 +309,21 @@ const App: NextPage = () => {
         title: `データベースを読み込みました`,
         isClosable: true,
       });
+      console.log('filter');
+      // console.log(gridApi.getFilterModel());
+      const currentFilterModel = gridApi.getFilterModel();
+      const newFilterModel = Object.keys(currentFilterModel).reduce(
+        (acc: FilterModel, key: string) => {
+          if (key !== 'boolean') {
+            acc[key] = currentFilterModel[key];
+          }
+          return acc;
+        },
+        {},
+      );
+      gridApi.setFilterModel(newFilterModel);
+      setIsFilterOn(false);
+      setCount(0);
     };
 
     input.click();
@@ -320,9 +350,13 @@ const App: NextPage = () => {
     }
   };
 
+  const [filterModelRec, setFilterModelRec] = useState<any>({}); // フィルターモデルの状態を保持するstate
+
   const changeView = () => {
+    const currentFilterModel = gridApi.getFilterModel();
     setView((prev) => (prev + 1) % 3);
     // console.log('change view');
+    setFilterModelRec(currentFilterModel);
   };
 
   /*
@@ -663,20 +697,22 @@ type dataRow = {
 
   const [count, setCount] = useState(0);
   const [isFilterOn, setIsFilterOn] = useState(false);
-
+  interface FilterModel {
+    [key: string]: any; // フィルターモデルのプロパティの型
+  }
   return (
     <>
       <Box h='100%' style={{ height: '100vh', overflow: 'clip' }}>
         <AppBar>
           <Flex alignItems='center'>
-            {isFileOpened && count > 0 ? (
+            {isFileOpened && count > 0 && !isFileLoading ? (
               <>
                 {/* ag-grid の external フィルター：booleanがtrueの列のみ */}
                 {!isFilterOn ? (
                   <Button
                     onClick={() => {
                       console.log('filter');
-                      console.log(gridApi.getFilterModel());
+                      // console.log(gridApi.getFilterModel());
                       const currentFilterModel = gridApi.getFilterModel();
                       const newFilterModel = {
                         ...currentFilterModel,
@@ -701,12 +737,8 @@ type dataRow = {
                 ) : (
                   <Button
                     onClick={() => {
-                      interface FilterModel {
-                        [key: string]: any; // フィルターモデルのプロパティの型
-                      }
-
                       console.log('filter');
-                      console.log(gridApi.getFilterModel());
+                      // console.log(gridApi.getFilterModel());
                       const currentFilterModel = gridApi.getFilterModel();
                       const newFilterModel = Object.keys(currentFilterModel).reduce(
                         (acc: FilterModel, key: string) => {
@@ -735,7 +767,7 @@ type dataRow = {
                     const selectedRows: number[] = [];
                     let allRowNodes: any = [];
                     gridApi.forEachNode((node: any) => allRowNodes.push(node.data));
-                    console.log(allRowNodes);
+                    // console.log(allRowNodes);
                     let count: number = 0;
                     allRowNodes.forEach((rowNode: any) => {
                       if (rowNode.boolean === true) {
@@ -777,6 +809,20 @@ type dataRow = {
                       }
                     });
                     gridApi.refreshCells();
+                    console.log('filter');
+                    // console.log(gridApi.getFilterModel());
+                    const currentFilterModel = gridApi.getFilterModel();
+                    const newFilterModel = Object.keys(currentFilterModel).reduce(
+                      (acc: FilterModel, key: string) => {
+                        if (key !== 'boolean') {
+                          acc[key] = currentFilterModel[key];
+                        }
+                        return acc;
+                      },
+                      {},
+                    );
+                    gridApi.setFilterModel(newFilterModel);
+                    setIsFilterOn(false);
                     setCount(0);
                     toast({
                       title: '選択を解除しました',
@@ -792,6 +838,30 @@ type dataRow = {
                   選択解除
                 </Button>
               </>
+            ) : (
+              <></>
+            )}
+            {isFileOpened && count === 0 && !isFileLoading ? (
+              <Button
+                mr={6}
+                className='ud-medium'
+                onClick={() => {
+                  const allRowNodes: any = [];
+                  gridApi.forEachNode((node: any) => allRowNodes.push(node.data));
+                  let count: number = 0;
+                  allRowNodes.forEach((rowNode: any) => {
+                    rowNode.boolean = true;
+                    count++;
+                  });
+                  gridApi.refreshCells();
+                  setCount(count);
+                }}
+                colorScheme='blue'
+                variant='ghost'
+                ml={2}
+              >
+                全て選択
+              </Button>
             ) : (
               <></>
             )}
@@ -839,9 +909,10 @@ type dataRow = {
                   // gridApiを設定
                   onGridReady={(params) => {
                     setGridApi(params.api);
+                    params.api.setFilterModel(filterModelRec);
                   }}
                   onCellValueChanged={(params) => {
-                    console.log(params);
+                    // console.log(params);
                     // const selectedRows = gridApi.getSelectedRows();
                     const allRows = gridApi.getRenderedNodes().map((node: any) => node.data);
                     // const unselectedRows = allRows.filter(
@@ -850,6 +921,22 @@ type dataRow = {
                     const a = allRows.filter((row: any) => row.boolean === true).length;
                     setCount(a);
                     console.log(a);
+                    if (a === 0) {
+                      console.log('none');
+                      // console.log(gridApi.getFilterModel());
+                      const currentFilterModel = gridApi.getFilterModel();
+                      const newFilterModel = Object.keys(currentFilterModel).reduce(
+                        (acc: FilterModel, key: string) => {
+                          if (key !== 'boolean') {
+                            acc[key] = currentFilterModel[key];
+                          }
+                          return acc;
+                        },
+                        {},
+                      );
+                      gridApi.setFilterModel(newFilterModel);
+                      setIsFilterOn(false);
+                    }
                     // Perform the dynamic update here
                   }}
                   rowData={rowData}
@@ -859,17 +946,16 @@ type dataRow = {
                     resizable: true,
                     filter: true,
                     sortable: true,
-                    flex: 1,
                     minWidth: 100,
                     floatingFilter: true,
+                    flex: 1,
                   }}
                   rowGroupPanelShow='always'
                   pivotPanelShow='always'
                   onRowClicked={(params: any) => {
-                    setOneData(params.data);
                     setIsSelected(true);
+                    setOneData(params.data);
                     // console.log(params.data);
-                    // onOpen();
                   }}
                   pagination={true}
                   paginationPageSize={500}
@@ -885,9 +971,10 @@ type dataRow = {
                     // gridApiを設定
                     onGridReady={(params) => {
                       setGridApi(params.api);
+                      params.api.setFilterModel(filterModelRec);
                     }}
                     onCellValueChanged={(params) => {
-                      console.log(params);
+                      // console.log(params);
                       // const selectedRows = gridApi.getSelectedRows();
                       const allRows = gridApi.getRenderedNodes().map((node: any) => node.data);
                       // const unselectedRows = allRows.filter(
@@ -896,6 +983,22 @@ type dataRow = {
                       const a = allRows.filter((row: any) => row.boolean === true).length;
                       setCount(a);
                       console.log(a);
+                      if (a === 0) {
+                        console.log('none');
+                        // console.log(gridApi.getFilterModel());
+                        const currentFilterModel = gridApi.getFilterModel();
+                        const newFilterModel = Object.keys(currentFilterModel).reduce(
+                          (acc: FilterModel, key: string) => {
+                            if (key !== 'boolean') {
+                              acc[key] = currentFilterModel[key];
+                            }
+                            return acc;
+                          },
+                          {},
+                        );
+                        gridApi.setFilterModel(newFilterModel);
+                        setIsFilterOn(false);
+                      }
                       // Perform the dynamic update here
                     }}
                     rowData={rowData}
@@ -967,9 +1070,10 @@ type dataRow = {
                     // gridApiを設定
                     onGridReady={(params) => {
                       setGridApi(params.api);
+                      params.api.setFilterModel(filterModelRec);
                     }}
                     onCellValueChanged={(params) => {
-                      console.log(params);
+                      // console.log(params);
                       // const selectedRows = gridApi.getSelectedRows();
                       const allRows = gridApi.getRenderedNodes().map((node: any) => node.data);
                       // const unselectedRows = allRows.filter(
@@ -978,6 +1082,22 @@ type dataRow = {
                       const a = allRows.filter((row: any) => row.boolean === true).length;
                       setCount(a);
                       console.log(a);
+                      if (a === 0) {
+                        console.log('none');
+                        // console.log(gridApi.getFilterModel());
+                        const currentFilterModel = gridApi.getFilterModel();
+                        const newFilterModel = Object.keys(currentFilterModel).reduce(
+                          (acc: FilterModel, key: string) => {
+                            if (key !== 'boolean') {
+                              acc[key] = currentFilterModel[key];
+                            }
+                            return acc;
+                          },
+                          {},
+                        );
+                        gridApi.setFilterModel(newFilterModel);
+                        setIsFilterOn(false);
+                      }
                       // Perform the dynamic update here
                     }}
                     rowData={rowData}
@@ -987,17 +1107,16 @@ type dataRow = {
                       resizable: true,
                       filter: true,
                       sortable: true,
-                      flex: 1,
                       minWidth: 100,
                       floatingFilter: true,
+                      flex: 1,
                     }}
                     rowGroupPanelShow='always'
                     pivotPanelShow='always'
                     onRowClicked={(params: any) => {
-                      setOneData(params.data);
                       setIsSelected(true);
+                      setOneData(params.data);
                       // console.log(params.data);
-                      // onOpen();
                     }}
                     pagination={true}
                     paginationPageSize={500}
