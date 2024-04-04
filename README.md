@@ -1,12 +1,18 @@
 # EBDAS Viewer
-第13回 科学の甲子園の事前公開競技「バルーンフェスタ in つくば」で使用する、気球の各種測定データ表示・分析用Webアプリ
-
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+第13回 科学の甲子園の事前公開競技「バルーンフェスタ in つくば」で使用する、気球の各種測定データ表示・分析用Webアプリ。
+[EBDAS](https://github.com/mkato77/EBDAS) で記録したSQLite3ファイルを開くことができます。
 
 ## Demo App (Hosted on Cloudflare Pages)
+こちらのリンクを開くことで、すぐに使用することが可能です。PWAに対応しています。
+
 [https://ebdas-viewer.pages.dev/](https://ebdas-viewer.pages.dev/)
 
-## Getting Started
+## About EBDAS
+[こちらのリポジトリ(mkato77/EBDAS)](https://github.com/mkato77/EBDAS)をご参照ください。
+SQLite3ファイルは、こちらのソフトを使用して生成する必要があります。
+
+## Getting Started (Development)
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 First, run the development server:
 
