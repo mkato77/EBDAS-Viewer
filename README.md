@@ -1,5 +1,10 @@
 # EBDAS Viewer
+第13回 科学の甲子園の事前公開競技「バルーンフェスタ in つくば」で使用する、気球の各種測定データ表示・分析用Webアプリ
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+## Demo App (Hosted on Cloudflare Pages)
+[https://ebdas-viewer.pages.dev/](https://ebdas-viewer.pages.dev/)
 
 ## Getting Started
 
